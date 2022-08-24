@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../../public/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/all.css" integrity="sha384-fZCoUih8XsaUZnNDOiLqnby1tMJ0sE7oBbNk2Xxf5x8Z4SvNQ9j83vFMa/erbVrV" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/solid.css" integrity="sha384-0BumEd2qDQ2SCps2Pnnhegpr+si0PveDhbdhKgLYwY9x611h8s22Zh8td+W7jeys" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/fontawesome.css" integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous"/>
+    <title>Document</title>
+</head>
+<body>
+<section>
+  {%block header %}
+  <div class="hero-head">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/club/">
+                    <img src="../../../public//imgs/CRUD-clubes.png" alt="Logo">
+                </a>
+                <span class="navbar-burger burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="tabs is-right">
+                        <ul>
+                            <li class="is-active"><a href="/club/">Home</a></li>
+                            <li><a href="/club/form">+Agregar Club</a></li>
+                            <li><a href="">+Agregar Área</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+{% endblock %}
+  {% block main %}
+  {% endblock %}
+</section>
+</body>
+</html>

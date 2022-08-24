@@ -1,0 +1,201 @@
+{% extends "../../views/parent.html" %}
+
+{% block main %}
+{% block club %}
+        <div class="container box p-6
+                    has-background-light">
+        <h1 class="title has-text-centered">
+            CRUD Clubes
+        </h1>
+        <h2 class="subtitle has-text-centered">
+            Formulario club {{club.id}}
+        </h2>
+        {% if club %}
+        <form action="/club/{{club.id}}" method="post">
+        {% else %}
+        <form action="/club/save" method="post">
+        {% endif %}
+            <div class="field">
+            <label class="label" for="name">Nombre</label>
+            <div class="control">
+                <input class="input" type="text" id="name" name="name"
+                    placeholder="Ingrese el nombre" value="{{club.name}}"/>
+            </div>
+            </div>
+    
+            <div class="field">
+            <label class="label" for="shortName">Nombre corto</label>
+            <div class="control has-icons-left id=
+                        has-icons-right">
+                <input
+                class="input"
+                type="text"
+                placeholder="Ingrese el nombre corto"
+                id="shortName"
+                name="shortName"
+                value="{{club.shortName}}"
+                />
+                <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+                </span>
+            </div>
+            </div>
+    
+            <div class="field">
+            <label class="label" for="tla">TLA</label>
+            <div class="control has-icons-left
+                        has-icons-right">
+                <input
+                class="input"
+                type="text"
+                placeholder="Ingrese TLA"
+                id="tla"
+                name="tla"
+                value="{{club.tla}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+            </div>
+            </div>
+    
+            <div class="field">
+            <label class="label" for="crest">Escudo</label>
+            <div class="control has-icons-left
+                        has-icons-right">
+                <input
+                class="input"
+                type="text"
+                placeholder="Ingrese el escudo"
+                id="crest"
+                name="crest"
+                value="{{club.crest}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-certificate"></i>
+                </span>
+            </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="address">Dirección</label>
+                <div class="control has-icons-left
+                            has-icons-right">
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Ingrese la dirección"
+                    id="address"
+                    name="address"
+                    value="{{club.address}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+                </div>
+            </div>
+
+            
+            <div class="field">
+                <label class="label" for="website">Sitio web</label>
+                <div class="control has-icons-left
+                            has-icons-right">
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Ingrese el sitio web"
+                    id="website"
+                    name="website"
+                    value="{{club.website}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-desktop"></i>
+                </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="founded">Año fundación</label>
+                <div class="control has-icons-left
+                            has-icons-right">
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Ingrese año de fundación"
+                    id="founded"
+                    name="founded"
+                    value="{{club.founded}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-calendar"></i>
+                </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="clubColors">Colores club</label>
+                <div class="control has-icons-left
+                            has-icons-right">
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Red / White / ..."
+                    id="clubColors"
+                    name="clubColors"
+                    value="{{club.clubColors}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-brush"></i>
+                </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="venue">Nombre estadio</label>
+                <div class="control has-icons-left
+                            has-icons-right">
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Ingrese el nombre"
+                    id="venue"
+                    name="venue"
+                    value="{{club.venue}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-building"></i>
+                </span>
+                </div>
+            </div>
+    
+            <div class="field">
+            <label class="label" for="area">
+                Área
+            </label>
+            <div class="control">
+                <div class="select">
+                <select id="area" name="area">
+                    <option>England</option>
+                </select>
+                </div>
+            </div>
+            </div>
+    
+            <div class="field is-grouped">
+            <div class="control">
+                {% if club %}
+                <input class="button is-success" type="submit" value="Guardar">
+                {% else %}
+                <input class="button is-success" type="submit" value="Agregar">
+                {% endif %}
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">
+                    Cancelar
+                </button>
+            </div>
+            </div>
+        </form>
+        </div>
+{% endblock %}
+{% endblock %}

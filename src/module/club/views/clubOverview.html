@@ -1,0 +1,79 @@
+{% extends "../../views/parent.html" %}
+
+{% block main %}
+{% block club %}
+    <section class="hero is-fullheight is-default is-bold">
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="columns is-vcentered">
+                    <div class="column is-4">
+                        <figure class="image is-1by1">
+                            <img src="{{club.crest}}" alt="{{club.name}}">
+                        </figure>
+                    </div>
+                    <div class="column is-6 is-offset-1">
+                        <div class="club_header">
+                            <h1 class="title is-2">
+                                {{club.name}}
+                            </h1>
+                            <div>
+                                <figure class="image is-48x48">
+                                    <img src="{{club.area.flag}}" alt="Placeholder image"/>
+                                </figure>
+                            </div>           
+                        </div>
+                        <h2 class="subtitle is-4">
+                            {{club.shortName}}.
+                        </h2>
+
+                        <div>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">TLA:</span> {{club.tla}}.
+                            </p>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">Fundación: </span>{{club.founded}}.
+                            </p>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">Estadio:</span> {{club.venue}}.
+                            </p>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">Colores club:</span> {{club.clubColors}}.
+                            </p>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">Sitio web:</span> {{club.website}}.
+                            </p>
+                            <p class="is-6">
+                                <span class="has-text-weight-medium">Dirección:</span> {{club.address}}.
+                            </p>
+                        </div>
+
+                        <div class="club_buttons">
+                            <p class="has-text-centered">
+                                <a href="/club/form/{{club.id}}" class="button is-medium is-info is-outlined">
+                                    Editar
+                                </a>
+                            </p>
+                            <p class="has-text-centered">
+                                <a class="button is-medium is-danger is-outlined">
+                                    Eliminar
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-foot">
+            <div class="container">
+                <div class="tabs is-centered">
+                    <ul>
+                        <li><a>And this is the bottom</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+{% endblock %}
