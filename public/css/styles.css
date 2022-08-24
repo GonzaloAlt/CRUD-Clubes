@@ -1,0 +1,52 @@
+.card{
+    max-width: 350px;
+    margin: auto;
+}
+.club_background{
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-size: 340px;
+    background-position-y: center;
+}
+.image{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+.club_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0px 125px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.club_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 12px;
+}
+.navbar{
+    background-color: #2A2A30;
+}
+.navbar a{
+    color: #FFC800;
+}
+.navbar a:hover{
+    color: white;
+    border-bottom-color: #FFC800 ;
+}
+.tabs ul{
+    border-bottom: none;
+}
+.tabs li.is-active a{
+    color: #ffffff;
+    border-bottom-color: #FFC800 ;
+}
+.tabs a{
+    border-bottom-color: #ffffff;
+}
