@@ -11,7 +11,7 @@ class Routes{
         app.get('/club/form/:id?', this.clubController.create.bind(this.clubController));
         app.get('/club/view/:id', this.clubController.view.bind(this.clubController));
         app.post('/club/save', this.clubController.save.bind(this.clubController));
-        app.delete('/club/:id', this.clubController.delete.bind(this.clubController));
+        app.get('/club/delete/:id', this.clubController.delete.bind(this.clubController));
         app.post('/club/:id', this.clubController.update.bind(this.clubController));
     }
 }
