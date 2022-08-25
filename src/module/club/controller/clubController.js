@@ -59,8 +59,12 @@ class ClubController {
      */
     async save(req, res){
         try {
-            const body = req.body;
-            const clubSaved = await this.clubService.save(body)
+            if(req.file){
+                const {path} = req.file;
+                const body = req.body;
+                body.crest = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
+                const clubSaved = await this.clubService.save(body)
+            }
             res.redirect('/club/')
         } catch (error) {
             throw new Error(error);
@@ -74,7 +78,12 @@ class ClubController {
         try {
             const {id} = req.params;
             const body = req.body;
-            const clubUpdated = await this.clubService.update(id, body);
+            if(req.file){
+                const {path} = req.file;
+                const club = body;
+                club.crest = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
+                const clubUpdated = await this.clubService.update(id, club);
+            }
             res.redirect('/club/')
         } catch (error) {
             throw new Error(error);

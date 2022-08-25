@@ -11,9 +11,9 @@
             Formulario club {{club.id}}
         </h2>
         {% if club %}
-        <form action="/club/{{club.id}}" method="post">
+        <form action="/club/{{club.id}}" method="post" enctype='multipart/form-data'>
         {% else %}
-        <form action="/club/save" method="post">
+        <form action="/club/save" method="post" enctype='multipart/form-data'>
         {% endif %}
             <div class="field">
             <label class="label" for="name">Nombre</label>
@@ -65,7 +65,7 @@
                         has-icons-right">
                 <input
                 class="input"
-                type="text"
+                type="file"
                 placeholder="Ingrese el escudo"
                 id="crest"
                 name="crest"

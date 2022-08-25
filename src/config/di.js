@@ -2,6 +2,7 @@ const { object, use, factory, func, default: DIContainer } = require('rsdi');
 const {ClubController, ClubService, ClubRepository, ClubRoutes} = require('../module/club/clubModule');
 const fs = require('fs');
 const { v4: uuid } = require('uuid');
+const path = require('path')
 const multer = require('multer');
 const session = require('express-session')
 
@@ -17,10 +18,10 @@ function configSession(){
 function configMulter(){
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, 'uploads')
+          cb(null, process.env.MIDDLEWARE_PATH)
         },
         filename: function (req, file, cb) {
-          cb(null, file.fieldname + '-' + Date.now())
+          cb(null, file.fieldname + '-' + Date.now()+path.extname(file.originalname))
         }
       })
        
@@ -55,8 +56,8 @@ function addCommonDefinitions(container){
  */
 function addClubModuleDefinitions(container){
     container.add({
-        ClubRoutes: object(ClubRoutes).construct(use('ClubController')),
-        ClubController: object(ClubController).construct(use('ClubService'), use('session'), use('multer')),
+        ClubRoutes: object(ClubRoutes).construct(use('multer'), use('ClubController')),
+        ClubController: object(ClubController).construct(use('ClubService'), use('session')),
         ClubService: object(ClubService).construct(use('ClubRepository')),
         ClubRepository: object(ClubRepository).construct(use('fs'), use('uuid'), use('db')),
     })
