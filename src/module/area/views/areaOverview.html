@@ -1,0 +1,48 @@
+{% extends "../../views/parent.html" %}
+
+{% block main %}
+{% block area %}
+    <section class="hero is-fullheight is-default is-bold">
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="columns is-vcentered">
+                    <div class="column is-4">
+                        <figure class="image is-1">
+                            <img src="{{area.flag}}" alt="{{area.name}} flag">
+                        </figure>
+                    </div>
+                    <div class="column is-6 is-offset-1">
+                        <div class="area_header">
+                            <h1 class="title is-2">
+                                {{area.name}}
+                            </h1>
+                            <div>
+                                <figure class="image is-48x48">
+                                    <img src="{{area.flag}}" alt="Placeholder image"/>
+                                </figure>
+                            </div>           
+                        </div>
+                        <h2 class="subtitle is-4">
+                            {{area.code}}.
+                        </h2>
+
+                        <div class="area_buttons">
+                            <p class="has-text-centered">
+                                <a href="/area/form/{{area.id}}" class="button is-medium is-info is-outlined">
+                                    Editar
+                                </a>
+                            </p>
+                            <p class="has-text-centered">
+                                <a href="/area/delete/{{area.id}}" class="button is-medium is-danger is-outlined">
+                                    Eliminar
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+{% endblock %}
