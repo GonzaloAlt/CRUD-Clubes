@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 
 const {initClub} = require('./module/club/clubModule');
+const {initArea} = require('./module/area/areaModule');
 const DIconfig = require('./config/di')
 
 const app = express()
@@ -18,6 +19,7 @@ const DIContainer = DIconfig(app);
 app.use(DIContainer.get('session'))
 
 initClub(app, DIContainer)
+initArea(app, DIContainer)
 
 // Resuelve los templates del path
 nunjucks.configure('src/module', {
