@@ -57,7 +57,7 @@ function addCommonDefinitions(container){
 function addClubModuleDefinitions(container){
     container.add({
         ClubRoutes: object(ClubRoutes).construct(use('multer'), use('ClubController')),
-        ClubController: object(ClubController).construct(use('ClubService'), use('session')),
+        ClubController: object(ClubController).construct(use('ClubService')),
         ClubService: object(ClubService).construct(use('ClubRepository')),
         ClubRepository: object(ClubRepository).construct(use('fs'), use('uuid'), use('db')),
     })

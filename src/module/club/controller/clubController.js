@@ -2,13 +2,9 @@ class ClubController {
     /**
      * 
      * @param {import('../service/clubService')} clubService 
-     * @param {*} session 
-     * @param {import('multer').Multer} multer 
      */
-    constructor(clubService, session, multer){
+    constructor(clubService){
         this.clubService = clubService;
-        this.session = session;
-        this.multer = multer;
     }
 
     /**
@@ -25,7 +21,7 @@ class ClubController {
                 res.render('club/views/clubForm.html') ;  
             }
         } catch (error) {
-            throw new Error(error)
+            req.session.errors = [error]
         }
     }
     /**
@@ -33,11 +29,16 @@ class ClubController {
      * @param {import('express').Response} res
      */
     async viewAll(req,res){
+        if(req.session.messages=== undefined) req.session.messages = []
+        if(req.session.errors=== undefined) req.session.errors = []
+
         try {
             const clubs = await this.clubService.getAll()
-            res.render('club/views/index.html', {clubs})
+            res.render('club/views/index.html', {clubs, messages:req.session.messages, errors: req.session.errors})
+            req.session.messages = []
+            req.session.errors = []
         } catch (error) {
-            throw new Error(error)
+            req.session.errors = [error]
         }
     }
     /**
@@ -50,7 +51,7 @@ class ClubController {
             const club = await this.clubService.getById(id)
             res.render('club/views/clubOverview.html', {club})
         } catch (error) {
-            throw new Error(error)
+            req.session.errors = [error]
         }
     }
     /**
@@ -63,11 +64,12 @@ class ClubController {
                 const {path} = req.file;
                 const body = req.body;
                 body.crest = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
-                const clubSaved = await this.clubService.save(body)
+                const clubSaved = await this.clubService.save(body);
+                req.session.messages = [`Se creó el club con id: ${clubSaved.id}`]
             }
             res.redirect('/club/')
         } catch (error) {
-            throw new Error(error);
+            req.session.errors = [error]
         }
     }
     /**
@@ -83,10 +85,14 @@ class ClubController {
                 const club = body;
                 club.crest = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
                 const clubUpdated = await this.clubService.update(id, club);
+                req.session.messages = [`Se actualizó el club con id: ${clubUpdated.id}`]
+            }else{
+                const clubUpdated = await this.clubService.update(id, body);
+                req.session.messages = [`Se actualizó el club con id: ${clubUpdated.id}`]
             }
             res.redirect('/club/')
         } catch (error) {
-            throw new Error(error);
+            req.session.errors = [error]
         }
     }
     /**
@@ -96,10 +102,11 @@ class ClubController {
     async delete(req, res){
         try {
             const {id} = req.params;
-            const clubs = await this.clubService.deleteById(id);
+            const clubDeleted = await this.clubService.deleteById(id);
+            req.session.messages = [`Se eliminó el club con id: ${clubDeleted.id}`]
             res.redirect('/club/')
         } catch (error) {
-            throw new Error(error)
+            req.session.errors = [error]
         }
     }
 }

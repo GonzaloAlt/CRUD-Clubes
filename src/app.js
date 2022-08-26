@@ -15,9 +15,9 @@ app.use('/public', express.static('public'));
 const port = process.env.PORT || 3000;
 
 const DIContainer = DIconfig(app);
-initClub(app, DIContainer)
-
 app.use(DIContainer.get('session'))
+
+initClub(app, DIContainer)
 
 // Resuelve los templates del path
 nunjucks.configure('src/module', {
