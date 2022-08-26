@@ -11,7 +11,7 @@
             Formulario club {{club.id}}
         </h2>
         {% if club %}
-        <form action="/club/{{club.id}}" method="post" enctype='multipart/form-data'>
+        <form action="/club/update/{{club.id}}" method="post" enctype='multipart/form-data'>
         {% else %}
         <form action="/club/save" method="post" enctype='multipart/form-data'>
         {% endif %}
