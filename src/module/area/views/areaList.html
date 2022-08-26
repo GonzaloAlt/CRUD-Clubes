@@ -1,0 +1,36 @@
+{% extends "../../views/parent.html" %}
+
+{% block main %}
+    <article class="panel is-dark">
+        {% if messages|length %}
+        <article class="message is-success">
+            <div class="message-body">
+                {{messages}}
+            </div>
+          </article>
+          {% endif %}
+        {% if errors|length %}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{errors}}
+            </div>
+          </article>
+          {% endif %}
+        <div class="panel-block">
+        <p class="control has-icons-left">
+            <input class="input is-dark" type="text" placeholder="Search">
+            <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+        </p>
+        </div>
+        {% for area in areas %}
+        <a href="/area/view/{{area.id}}" class="panel-block is-active club_background is-vcentered" onmouseover="this.style.backgroundImage= 'url({{area.flag}})'" onmouseleave="this.style.backgroundImage='none'">
+            <figure class="image is-48x48 panel-block is-vcentered">
+                <img src="{{area.flag}}" alt="Placeholder image" class=""/>
+            </figure>
+            {{area.name}}
+        </a>
+        {% endfor %}
+    </article>
+{% endblock %}

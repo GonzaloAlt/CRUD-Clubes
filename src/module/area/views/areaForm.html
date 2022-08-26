@@ -1,0 +1,80 @@
+{% extends "../../views/parent.html" %}
+
+{% block main %}
+{% block area %}
+        <div class="container box p-6
+                    has-background-light">
+        <h1 class="title has-text-centered">
+            CRUD Clubes
+        </h1>
+        <h2 class="subtitle has-text-centered">
+            Formulario área {{area.id}}
+        </h2>
+        {% if area %}
+        <form action="/area/update/{{area.id}}" method="post" enctype='multipart/form-data'>
+        {% else %}
+        <form action="/area/save" method="post" enctype='multipart/form-data'>
+        {% endif %}
+            <div class="field">
+            <label class="label" for="name">Nombre</label>
+            <div class="control">
+                <input class="input" type="text" id="name" name="name"
+                    placeholder="Ingrese el nombre" value="{{area.name}}"/>
+            </div>
+            </div>
+    
+            <div class="field">
+            <label class="label" for="code">Código</label>
+            <div class="control has-icons-left id=
+                        has-icons-right">
+                <input
+                class="input"
+                type="text"
+                placeholder="Ingrese el código"
+                id="code"
+                name="code"
+                value="{{area.code}}"
+                />
+                <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+                </span>
+            </div>
+            </div>
+    
+
+            <div class="field">
+            <label class="label" for="flag">Bandera</label>
+            <div class="control has-icons-left
+                        has-icons-right">
+                <input
+                class="input"
+                type="file"
+                placeholder="Ingrese bandera"
+                id="flag"
+                name="flag"
+                value="{{area.flag}}"
+                />
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-flag"></i>
+                </span>
+            </div>
+            </div>
+    
+            <div class="field is-grouped">
+            <div class="control">
+                {% if area %}
+                <input class="button is-success" type="submit" value="Guardar">
+                {% else %}
+                <input class="button is-success" type="submit" value="Agregar">
+                {% endif %}
+            </div>
+            <div class="control">
+                <a href="/area/" class="button is-link is-light">
+                    Cancelar
+                </a>
+            </div>
+            </div>
+        </form>
+        </div>
+{% endblock %}
+{% endblock %}
