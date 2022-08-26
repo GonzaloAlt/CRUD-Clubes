@@ -40,10 +40,10 @@ class Repository{
     
       async save(club) {
         await this.readFile();
-        console.log({...club, id: this.uuid()})
-        this.dbContent.push({...club, id: this.uuid()});
-    
-        return this.writeDoc(this.dbContent);
+        const newClub = {...club, id: this.uuid()}
+        this.dbContent.push(newClub);
+        this.writeDoc(this.dbContent);
+        return newClub
       }
     
       async getById(id) {
@@ -60,9 +60,15 @@ class Repository{
     
       async deleteById(id) {
         await this.readFile();
+        const club = this.dbContent.find((club) => club.id === id);
+        this.fs.unlink(process.cwd()+club.crest, (err) => {
+          if (err) {
+            console.error(err)
+          }
+        })
         const clubs = this.dbContent.filter((club) => club.id !== id);
-    
-        return this.writeDoc(clubs);
+        await this.writeDoc(clubs);
+        return club
       }
     
       deleteAll() {
@@ -74,8 +80,10 @@ class Repository{
         await this.readFile();
         const clubIndex = this.dbContent.map((club)=> club.id).indexOf(id);
         if(clubIndex !== -1){
-            this.dbContent[clubIndex] = {id,...info};
-            return this.writeDoc(this.dbContent);
+          const club = {id,...info}
+            this.dbContent[clubIndex] = club;
+            this.writeDoc(this.dbContent);
+            return club
         }
       }
 
