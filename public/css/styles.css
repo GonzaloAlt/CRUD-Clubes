@@ -2,7 +2,7 @@
     max-width: 350px;
     margin: auto;
 }
-.club_background{
+.club_background, .area_background{
     background-repeat: no-repeat;
     background-position-x: right;
     background-size: 340px;
@@ -14,7 +14,7 @@
     max-width: 100%;
     max-height: 100%;
 }
-.club_buttons{
+.club_buttons, .area_buttons{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -22,7 +22,7 @@
     flex-wrap: wrap;
     margin-top: 20px;
 }
-.club_header{
+.club_header, .area_header{
     display: flex;
     flex-direction: row;
     justify-content: center;
