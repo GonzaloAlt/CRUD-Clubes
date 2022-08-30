@@ -107,7 +107,7 @@ class AreaController{
         try {
             const {id} = req.params;
             const areaDeleted = await this.areaService.deleteById(id);
-            req.session.messages = [`Se eliminó el área con id: ${areaDeleted.id}`]
+            req.session.messages = [`Se eliminó el área`]
             res.redirect('/area/')
         } catch (error) {
             req.session.errors = [error]
