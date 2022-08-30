@@ -2,9 +2,11 @@ class ClubController {
     /**
      * 
      * @param {import('../service/clubService')} clubService 
+     * @param {import('../../area/service/areaService')} areaService 
      */
-    constructor(clubService){
+    constructor(clubService, areaService){
         this.clubService = clubService;
+        this.areaService = areaService;
     }
 
     /**
@@ -14,11 +16,12 @@ class ClubController {
     async create(req, res){
         try {
             const {id} = req.params;
+            const areas = await this.areaService.getAll()
             if(id){
                 const club = await this.clubService.getById(id)
-                res.render('club/views/clubForm.html', {club,id})
+                res.render('club/views/clubForm.html', {club,id, areas})
             }else{
-                res.render('club/views/clubForm.html') ;  
+                res.render('club/views/clubForm.html', {areas}) ;  
             }
         } catch (error) {
             req.session.errors = [error]
@@ -49,7 +52,8 @@ class ClubController {
         try {
             const {id} = req.params;
             const club = await this.clubService.getById(id)
-            res.render('club/views/clubOverview.html', {club})
+            const area = await this.areaService.getById(club.area)
+            res.render('club/views/clubOverview.html', {club, area})
         } catch (error) {
             req.session.errors = [error]
         }
@@ -103,7 +107,7 @@ class ClubController {
         try {
             const {id} = req.params;
             const clubDeleted = await this.clubService.deleteById(id);
-            req.session.messages = [`Se eliminó el club con id: ${clubDeleted.id}`]
+            req.session.messages = [`Se eliminó el club`]
             res.redirect('/club/')
         } catch (error) {
             req.session.errors = [error]
