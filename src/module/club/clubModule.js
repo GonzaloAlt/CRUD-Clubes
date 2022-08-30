@@ -2,6 +2,7 @@ const ClubRoutes = require('./routes/clubRoutes');
 const ClubController = require('./controller/clubController');
 const ClubService = require('./service/clubService');
 const ClubRepository = require('./repository/clubRepository');
+const ClubMapper = require('./mappers/clubMapper')
 
 /**
  * 
@@ -20,5 +21,6 @@ module.exports = {
     ClubRoutes,
     ClubController,
     ClubService,
-    ClubRepository
+    ClubRepository,
+    ClubMapper
 }

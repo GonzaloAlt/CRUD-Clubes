@@ -1,9 +1,8 @@
 class Club{
     constructor(
-        id, area, name, shortName, tla, crest, address, website, founded, clubColors, venue, lastUpdated
+        id, name, shortName, tla, crest, address, website, founded, clubColors, venue, area
     ){
         this.id = id;
-        this.area = area;
         this.name = name;
         this.shortName = shortName;
         this.tla = tla;
@@ -13,6 +12,8 @@ class Club{
         this.founded= founded;
         this.clubColors = clubColors;
         this.venue = venue;
-        this.lastUpdated = lastUpdated;
+        this.area = area;
     }
 }
+
+module.exports = Club;

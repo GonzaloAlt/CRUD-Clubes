@@ -175,7 +175,9 @@
             <div class="control">
                 <div class="select">
                 <select id="area" name="area">
-                    <option>England</option>
+                    {% for area in areas %}
+                    <option value="{{area.id}}">{{area.name}}</option>
+                    {% endfor %}
                 </select>
                 </div>
             </div>

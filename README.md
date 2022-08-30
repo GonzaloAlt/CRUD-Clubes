@@ -1,6 +1,7 @@
 # CRUD CLUBES
 
 _Este es un CRUD hecho para r/ArgentinaPrograma (https://argentinaprograma.com)_
+Agrega, lee, modifica y elimina clubes de futbol y paises.
 
 ## Comenzando 🚀
 
@@ -31,6 +32,7 @@ npm start
 - [Font Awesome](https://fontawesome.com/) - Icon library and Toolkit.
 - [Multer](https://github.com/expressjs/multer) - Node.js middleware for handling multipart/form-data.
 - [JSDoc](https://jsdoc.app/) - An API documentation generator for JavaScript.
+- [Better-sqlite3](https://github.com/WiseLibs/better-sqlite3) - Library for SQLite3 in Node.js.
 
 
 

@@ -1,113 +1,60 @@
 class Repository{
     /**
-     * 
-     * @param {import('fs/promises')} fs 
-     * @param {import('uuid')} uuid
-     * @param {import('./db/clubs.json')} dbFile 
+     * @param {import('better-sqlite3').Database} db
+     * @param {import('../mappers/clubMapper')} clubMapper
+     * @param {import('fs')} fs
      */
-    constructor(fs, uuid, dbFile ){
-        this.fs = fs;
-        this.uuid = uuid;
-        this.dbFile = dbFile;
-        this.dbContent = [];
+    constructor(db, clubMapper, fs){
+      this.db = db; 
+      this.clubMapper = clubMapper;
+      this.fs = fs;
     }
-    
-    async readDoc () {
-        try {
-          const content = await this.fs.promises.readFile(this.dbFile, "utf-8");
-          console.log("Información obtenida correctamente");
-        //   console.log(JSON.parse(content));
-          return JSON.parse(content);
-        } catch (error) {
-          throw new Error(`Error en lectura: ${error.message}`);
-        }
-      }
-      
-      async writeDoc(info) {
-        try {
-          await this.fs.promises.writeFile(this.dbFile, JSON.stringify(info, null, 2));
-          console.log(`Escritura exitosa: ${this.dbContent}`);
-        } catch (error) {
-          throw new Error(`Error en escritura: ${error.message}`);
-        }
-      }
 
-      async readFile() {
-        this.dbContent = await this.readDoc(this.dbFile);
-        console.log(typeof this.dbContent);
-        return this.dbContent;
-      }
-    
       async save(club) {
-        await this.readFile();
-        const newClub = {...club, id: this.uuid()}
-        this.dbContent.push(newClub);
-        this.writeDoc(this.dbContent);
-        return newClub
+        console.log(club)
+        const {name, shortName, tla, crest, address, website, founded, clubColors, venue, area} = club;
+        const insert = this.db.prepare(`INSERT INTO clubs (name, short_name, tla, crest, address, website, founded, club_colors, venue, fk_area) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+        const newClub = insert.run(name, shortName, tla, crest, address, website, founded, clubColors, venue, area);
+        return {...club, id:newClub.lastInsertRowid}
       }
     
       async getById(id) {
-        await this.readFile();
-        const club = this.dbContent.find((club) => club.id === id) || null;
-        return club;
+        const club = this.db.prepare(`SELECT id, name, short_name, tla, crest, address, website, founded, club_colors, venue, fk_area FROM clubs WHERE id= ?`).get(id);
+        const clubFounded =  this.clubMapper.dbDataToEntity(club)
+        return clubFounded;
       }
     
       async getAll() {
-        await this.readFile();
-    
-        return [...this.dbContent];
+        const clubs = this.db.prepare(`SELECT id, name, short_name, tla, crest, address, website, founded, club_colors, venue, fk_area FROM clubs`).all();
+        const clubsFounded = clubs.map(club =>  this.clubMapper.dbDataToEntity(club));
+        return clubsFounded;
       }
     
       async deleteById(id) {
-        await this.readFile();
-        const club = this.dbContent.find((club) => club.id === id);
-        this.fs.unlink(process.cwd()+club.crest, (err) => {
+        const {crest} = await this.getById(id)
+        this.fs.unlink(process.cwd()+crest, (err) => {
           if (err) {
             console.error(err)
           }
         })
-        const clubs = this.dbContent.filter((club) => club.id !== id);
-        await this.writeDoc(clubs);
-        return club
+        const clubDeleted = this.db.prepare(`DELETE FROM clubs WHERE id=?`);
+        clubDeleted.run(id)
+        return true;
       }
     
-      deleteAll() {
-        this.dbContent = [];
-        return this.writeDoc(this.dbContent);
-      }
-
       async update(id, info){
-        await this.readFile();
-        const clubIndex = this.dbContent.map((club)=> club.id).indexOf(id);
-        if(clubIndex !== -1){
-          const club = {id,...info}
-            this.dbContent[clubIndex] = club;
-            this.writeDoc(this.dbContent);
-            return club
+        if (info.crest){
+          const {name, shortName, tla, crest, address, website, founded, clubColors, venue, area} = info;
+          const update = this.db.prepare(`UPDATE clubs SET name = ?, short_name = ?, tla = ?, crest = ?, address = ?, website = ?, founded = ?, club_colors = ?, venue = ?, fk_area = ? WHERE id = ?`);
+          const club = update.run(name, shortName, tla, crest, address, website, founded, clubColors, venue, area, id);
+          return {...info, id}
+        }else{
+          const {name, shortName, tla, address, website, founded, clubColors, venue, area} = info;
+          const update = this.db.prepare(`UPDATE clubs SET name = ?, short_name = ?, tla = ?, address = ?, website = ?, founded = ?, club_colors = ?, venue = ?, fk_area = ? WHERE id = ?`);
+          const club = update.run(name, shortName, tla, address, website, founded, clubColors, venue, area, id);
+          return {...info, id}
         }
       }
-
-    //   async myScript(){
-    //     await this.readFile();
-    //     this.dbContent= this.dbContent.map((club) =>{
-    //         return ({
-    //             area: club.area,
-    //             id: club.id.toString(),
-    //             name: club.name,
-    //             shortName: club.shortName,
-    //             tla: club.tla,
-    //             crest: club.crest,
-    //             address: club.address,
-    //             website: club.website,
-    //             founded: club.founded,
-    //             clubColors: club.clubColors,
-    //             venue: club.venue,
-    //             lastUpdated: club.lastUpdated
-    //         })
-    //     });
-    //     return this.writeDoc(this.dbContent);
-    //   }
-
 }
 
 module.exports = Repository;
