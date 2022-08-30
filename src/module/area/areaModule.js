@@ -2,6 +2,7 @@ const AreaRoutes = require('./routes/areaRoutes');
 const AreaController = require('./controller/areaController');
 const AreaService = require('./service/areaService');
 const AreaRepository = require('./repository/areaRepository');
+const AreaMapper = require('./mappers/areaMapper')
 
 /**
  * 
@@ -20,5 +21,6 @@ module.exports = {
     AreaRoutes,
     AreaController,
     AreaService,
-    AreaRepository
+    AreaRepository,
+    AreaMapper
 }
