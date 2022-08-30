@@ -6,3 +6,5 @@ class Area{
         this.flag = flag;
     }
 }
+
+module.exports = Area;
