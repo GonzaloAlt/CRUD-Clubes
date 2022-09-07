@@ -2,13 +2,14 @@ const ClubRoutes = require('./routes/clubRoutes');
 const ClubController = require('./controller/clubController');
 const ClubService = require('./service/clubService');
 const ClubRepository = require('./repository/clubRepository');
-const ClubMapper = require('./mappers/clubMapper')
+const ClubMapper = require('./mappers/clubMapper');
+const ClubModel = require('./model/clubModel');
 
 /**
  * 
  * @param {import('rsdi').IDIContainer} container
  */
-function initClub(app, container){
+function initClub(app, container) {
     /**
      * @param {import('./routes/clubRoutes')} clubRoutes
      */
@@ -22,5 +23,6 @@ module.exports = {
     ClubController,
     ClubService,
     ClubRepository,
-    ClubMapper
+    ClubMapper,
+    ClubModel
 }
