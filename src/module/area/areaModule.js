@@ -3,12 +3,13 @@ const AreaController = require('./controller/areaController');
 const AreaService = require('./service/areaService');
 const AreaRepository = require('./repository/areaRepository');
 const AreaMapper = require('./mappers/areaMapper')
+const AreaModel = require('./model/areaModel')
 
 /**
  * 
  * @param {import('rsdi').IDIContainer} container
  */
-const initArea = (app, container)=>{
+const initArea = (app, container) => {
     /**
      * @param {import('../area/routes/areaRoutes')} areaRoutes
      */
@@ -22,5 +23,6 @@ module.exports = {
     AreaController,
     AreaService,
     AreaRepository,
-    AreaMapper
+    AreaMapper,
+    AreaModel
 }
