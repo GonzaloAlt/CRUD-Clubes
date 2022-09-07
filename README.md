@@ -33,6 +33,7 @@ npm start
 - [Multer](https://github.com/expressjs/multer) - Node.js middleware for handling multipart/form-data.
 - [JSDoc](https://jsdoc.app/) - An API documentation generator for JavaScript.
 - [Better-sqlite3](https://github.com/WiseLibs/better-sqlite3) - Library for SQLite3 in Node.js.
+- [Sequelize](https://sequelize.org/) - TypeScript and Node.js ORM.
 
 
 
