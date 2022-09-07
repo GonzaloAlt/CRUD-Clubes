@@ -1,27 +1,27 @@
-class Service{
+class Service {
     /**
      * 
      * @param {import('../repository/clubRepository')} clubRepository 
      */
-    constructor(clubRepository){
+    constructor(clubRepository) {
         this.clubRepository = clubRepository;
     }
 
-    async save(club){
+    async save(club) {
         try {
             return this.clubRepository.save(club)
         } catch (error) {
             throw Error(error)
         }
     }
-    async getById(id){
+    async getById(id) {
         try {
             return this.clubRepository.getById(id)
         } catch (error) {
             throw Error(error)
         }
     }
-    async getAll(){
+    async getAll() {
         try {
             return this.clubRepository.getAll()
         } catch (error) {
@@ -29,7 +29,7 @@ class Service{
         }
     }
 
-    async deleteById(id){
+    async deleteById(id) {
         try {
             return this.clubRepository.deleteById(id)
         } catch (error) {
@@ -37,7 +37,7 @@ class Service{
         }
     }
 
-    async deleteAll(){
+    async deleteAll() {
         try {
             return this.clubRepository.deleteAll()
         } catch (error) {
@@ -45,7 +45,7 @@ class Service{
         }
     }
 
-    async update(id, info){
+    async update(id, info) {
         try {
             return this.clubRepository.update(id, info)
         } catch (error) {

@@ -1,59 +1,53 @@
-class Repository{
-    /**
-     * @param {import('better-sqlite3').Database} db
-     * @param {import('../mappers/areaMapper')} areaMapper
-     * @param {import('fs')} fs
-     */
-    constructor(db, areaMapper, fs ){
-        this.db = db;
-        this.areaMapper = areaMapper;
-        this.fs = fs;
-    }
+class Repository {
+  /**
+   * @param {import('better-sqlite3').Database} db
+   * @param {typeof import('../model/areaModel')} areaModel
+   * @param {import('../mappers/areaMapper')} areaMapper
+   * @param {import('fs')} fs
+   */
+  constructor(areaModel, areaMapper, fs) {
+    this.areaModel = areaModel;
+    this.areaMapper = areaMapper;
+    this.fs = fs;
+  }
 
-    async save(area) {
-        const insert = this.db.prepare(`INSERT INTO areas (name, code, flag) VALUES(?, ?, ?)`);
-        const {name, code, flag} = area;
-        const newArea = insert.run(name, code, flag);
-        return {...area, id:newArea.lastInsertRowid}
-    }
+  async save(area) {
+    const newArea = await this.areaModel.create(area)
+    return this.areaMapper.modelToEntity(newArea)
+  }
 
-    async getById(id) {
-        const area = this.db.prepare(`SELECT id, name, code, flag FROM areas WHERE id= ?`).get(id);
-        const areaFounded =  this.areaMapper.dbDataToEntity(area)
-        return areaFounded;
-    }
+  async getById(id) {
+    const area = await this.areaModel.findOne({ where: { id } });
+    const areaFounded = this.areaMapper.modelToEntity(area)
+    return areaFounded;
+  }
 
-    async getAll() {
-        const areas = this.db.prepare(`SELECT id, name, code, flag FROM areas`).all();
-        const areasFounded = areas.map(area =>  this.areaMapper.dbDataToEntity(area));
-        return areasFounded;
-    }
+  async getAll() {
+    const areas = await this.areaModel.findAll();
+    const areasFounded = areas.map(area => this.areaMapper.modelToEntity(area));
+    return areasFounded;
+  }
 
-    async deleteById(id) {
-        const {flag} = await this.getById(id)
-        this.fs.unlink(process.cwd()+flag, (err) => {
-          if (err) {
-            console.error(err)
-          }
-        })
-        const areaDeleted = this.db.prepare(`DELETE FROM areas WHERE id=?`);
-        areaDeleted.run(id)
-        return true;
-    }
+  async deleteById(id) {
+    const { flag } = await this.getById(id)
+    this.fs.unlink(process.cwd() + flag, (err) => {
+      if (err) {
+        console.error(err)
+      }
+    })
+    const deletedArea = await this.areaModel.destroy({ where: { id } })
+    return true;
+  }
 
-    async update(id, info){
-        if (info.flag){
-            const {name, code, flag} = info;
-            const update = this.db.prepare(`UPDATE areas SET name = ?, code = ?, flag = ? WHERE id = ?`);
-            const area = update.run(name, code, flag, id);
-            return {...info, id}
-          }else{
-            const {name, code} = info;
-            const update = this.db.prepare(`UPDATE areas SET name = ?, code = ? WHERE id = ?`);
-            const area = update.run(name, code, id);
-            return {...info, id}
-          }
-    }
+  async update(id, info) {
+    await this.areaModel.update({ ...info }, {
+      where: {
+        id
+      }
+    });
+    const savedArea = await this.getById(id)
+    return savedArea;
+  }
 }
 
 module.exports = Repository;

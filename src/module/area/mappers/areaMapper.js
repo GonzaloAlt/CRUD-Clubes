@@ -1,15 +1,12 @@
 const Area = require('../entity/area')
 
-class AreaMapper{
-    constructor(){}
+class AreaMapper {
+    constructor() { }
 
-    dbDataToEntity(area){
-        const {id, name, code, flag} = area;
-        return new Area(id, name, code, flag)
-    }
-    entityToDbData(area){
-        const {id, name, code, flag} = area;
-        return new Area(id, name, code, flag)
+    modelToEntity(model) {
+        //https://sequelize.org/docs/v6/core-concepts/model-instances/#note-logging-instances
+        const jsonModel = model.toJSON()
+        return new Area(jsonModel);
     }
 }
 
