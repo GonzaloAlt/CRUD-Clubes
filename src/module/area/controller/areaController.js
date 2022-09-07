@@ -1,9 +1,9 @@
-class AreaController{
+class AreaController {
     /**
      * 
      * @param {import('../service/areaService')} areaService 
      */
-    constructor(areaService){
+    constructor(areaService) {
         this.areaService = areaService;
     }
 
@@ -11,14 +11,14 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async create(req, res){
+    async create(req, res) {
         try {
-            const {id} = req.params;
-            if(id){
+            const { id } = req.params;
+            if (id) {
                 const area = await this.areaService.getById(id)
-                res.render('area/views/areaForm.html', {area,id})
-            }else{
-                res.render('area/views/areaForm.html') ;  
+                res.render('area/views/areaForm.html', { area, id })
+            } else {
+                res.render('area/views/areaForm.html');
             }
         } catch (error) {
             req.session.errors = [error]
@@ -28,13 +28,13 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async viewAll(req, res){
-        if(req.session.messages=== undefined) req.session.messages = []
-        if(req.session.errors=== undefined) req.session.errors = []
+    async viewAll(req, res) {
+        if (req.session.messages === undefined) req.session.messages = []
+        if (req.session.errors === undefined) req.session.errors = []
 
         try {
             const areas = await this.areaService.getAll();
-            res.render('area/views/areaList.html', {areas, messages:req.session.messages, errors: req.session.errors})
+            res.render('area/views/areaList.html', { areas, messages: req.session.messages, errors: req.session.errors })
             req.session.messages = []
             req.session.errors = []
         } catch (error) {
@@ -46,11 +46,13 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async view(req, res){
+    async view(req, res) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
+            console.log(id)
             const area = await this.areaService.getById(id)
-            res.render('area/views/areaOverview.html', {area})
+            console.log(area)
+            res.render('area/views/areaOverview.html', { area })
         } catch (error) {
             req.session.errors = [error]
         }
@@ -60,10 +62,10 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async save(req, res){
+    async save(req, res) {
         try {
-            if(req.file){
-                const {path} = req.file;
+            if (req.file) {
+                const { path } = req.file;
                 const body = req.body;
                 body.flag = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
                 const areaSaved = await this.areaService.save(body);
@@ -79,17 +81,17 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async update(req, res){
+    async update(req, res) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
             const body = req.body;
-            if(req.file){
-                const {path} = req.file;
+            if (req.file) {
+                const { path } = req.file;
                 const area = body;
                 area.flag = `/${path.replace("\\\\", "http://").replace(/\\/g, "/")}`;
                 const areaUpdated = await this.areaService.update(id, area);
                 req.session.messages = [`Se actualizó el área con id: ${areaUpdated.id}`]
-            }else{
+            } else {
                 const areaUpdated = await this.areaService.update(id, body);
                 req.session.messages = [`Se actualizó el área con id: ${areaUpdated.id}`]
             }
@@ -103,9 +105,9 @@ class AreaController{
     * @param {import('express').Request} req
     * @param {import('express').Response} res
     */
-    async delete(req, res){
+    async delete(req, res) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
             const areaDeleted = await this.areaService.deleteById(id);
             req.session.messages = [`Se eliminó el área`]
             res.redirect('/area/')
